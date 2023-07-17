@@ -3,6 +3,10 @@ class Task {
     this.task = task;
     this.complete = complete;
   }
+
+  static fromJSON(json) {
+    return new Task(json.task, json.complete);
+  }
 }
 
 class UI {
@@ -14,6 +18,7 @@ class UI {
     this.form.addEventListener("submit", (e) => this.onFormSubmit(e));
 
     this.tasks = [];
+    this.loadTasksFromLocalStorage();
 
     this.renderTaskTable();
   }
@@ -27,6 +32,8 @@ class UI {
 
     const task = new Task(this.taskInput.value);
     this.tasks.push(task);
+    this.saveTasksToLocalStorage();
+
     this.renderTaskTable();
 
     this.taskInput.value = "";
@@ -48,6 +55,7 @@ class UI {
     for (let i = 0; i < completeButtons.length; ++i) {
       completeButtons[i].addEventListener("click", () => {
         this.tasks[i].complete = true;
+        this.saveTasksToLocalStorage();
         this.renderTaskTable();
       });
     }
@@ -71,7 +79,7 @@ class UI {
     deleteButton.setAttribute("class", "bi bi-trash");
     deleteButton.style.cursor = "pointer";
     deleteButton.addEventListener("click", () => {
-      // call a delete func
+      this.onDeleteTaskClicked(index);
     });
 
     tdActions.appendChild(deleteButton);
@@ -81,6 +89,25 @@ class UI {
     tr.appendChild(tdActions);
 
     return tr;
+  }
+
+  onDeleteTaskClicked(index) {
+    this.tasks.splice(index, 1);
+    this.saveTasksToLocalStorage();
+    this.renderTaskTable();
+  }
+
+  saveTasksToLocalStorage() {
+    const json = JSON.stringify(this.tasks);
+    localStorage.setItem("tasks", json);
+  }
+
+  loadTasksFromLocalStorage() {
+    const json = localStorage.getItem("tasks");
+    if (json) {
+      const taskArr = JSON.parse(json);
+      this.tasks = taskArr.map((x) => Task.fromJSON(x));
+    }
   }
 }
 
