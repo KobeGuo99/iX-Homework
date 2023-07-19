@@ -25,12 +25,11 @@ export default function TaskTable(props) {
                   />
                 </td>
                 <td>
-                  <button
-                    className="btn btn-danger btn-sm me-1"
+                  <i
+                    className="bi bi-trash me-1"
                     onClick={() => props.onTaskDelete(index)}
-                  >
-                    Delete
-                  </button>
+                    style={{ cursor: "pointer" }}
+                  ></i>
                 </td>
               </tr>
             );
