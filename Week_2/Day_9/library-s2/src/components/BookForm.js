@@ -19,16 +19,16 @@ export default function BookForm(props) {
   
     if (!isValid()) return;
   
-    let book = new Book(title, author, isbn);
+    let book;
     if (props.bookToEdit) {
-      book.id = props.bookToEdit.id; 
+      book = new Book(props.bookToEdit.id, title, author, isbn);
       props.onBookEdit(book);
     } else {
+      book = new Book(null, title, author, isbn);
       props.onBookCreated(book);
     }
     clearInputs();
   }
-  
   
   
   

@@ -26,10 +26,10 @@ function App() {
 
   async function onBookCreated(book) {
     const newBook = await BookService.createBook(book);
-    newBook.id = newBook.id; 
     setBookToEdit(null);
     setBooks([...books, newBook]);
   }
+  
   
 
 

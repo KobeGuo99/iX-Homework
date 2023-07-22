@@ -35,15 +35,16 @@ class BookService {
 
   async createBook(book) {
     const collectionRef = collection(db, this.collection);
-
+  
     const docRef = await addDoc(collectionRef, {
       title: book.title,
       author: book.author,
       isbn: book.isbn,
     });
-
+  
     return new Book(docRef.id, book.title, book.author, book.isbn);
   }
+  
 
   async updateBook(book) {
     const docRef = doc(db, this.collection, book.id);
