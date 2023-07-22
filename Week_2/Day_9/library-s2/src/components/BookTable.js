@@ -29,7 +29,7 @@ export default function BookTable(props) {
                   <button
                     className="btn btn-warning btn-sm ms-1"
                     onClick={() => {
-                      props.onBookEdit(book);
+                      props.onBookEditInitiate(book);
                     }}
                   >
                     Edit

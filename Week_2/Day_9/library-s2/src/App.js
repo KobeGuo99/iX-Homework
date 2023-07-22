@@ -29,15 +29,11 @@ function App() {
     setBookToEdit(null);
     setBooks([...books, newBook]);
   }
-  
-  
-
 
   async function onBookDelete(book) {
     await BookService.deleteBook(book.id);
     setBooks(books.filter((x) => x.isbn !== book.isbn));
   }
-  
 
   async function onBookEditInitiate(book) {
     setBookToEdit(book);
@@ -48,21 +44,23 @@ function App() {
     setBookToEdit(null);
     setBooks(
       books.map((b) => {
-        return b.isbn === book.isbn ? updatedBook : b;
+        return b.id === book.id ? updatedBook : b;
       })
     );
   }
-  
-  
 
   return (
     <div className="m-5">
       <div className="card p-4">
-        <BookForm onBookCreated={onBookCreated} bookToEdit={bookToEdit} />
+        <BookForm
+          onBookCreated={onBookCreated}
+          onBookEdit={onBookEdit}
+          bookToEdit={bookToEdit}
+        />
         <BookTable
           books={books}
           onBookDelete={onBookDelete}
-          onBookEdit={onBookEdit}
+          onBookEditInitiate={onBookEditInitiate}
         />
       </div>
     </div>
