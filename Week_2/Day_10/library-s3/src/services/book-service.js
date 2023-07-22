@@ -23,7 +23,7 @@ class BookService {
     const books = [];
     querySnapshot.forEach((doc) => {
       const data = doc.data();
-      const book = new Book(data.title, data.author, data.isbn); 
+      const book = new Book(doc.id, data.title, data.author, data.isbn); 
       book.id = doc.id; 
       books.push(book);
     });
